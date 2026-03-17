@@ -1,0 +1,56 @@
+@OsuApi_HostAddress = http://localhost:23316
+
+POST {{OsuApi_HostAddress}}/calculate
+Content-Type: application/json
+
+{
+  "file": "/home/spring/Documents/Fujikawa Chiai - 1000-nen Ai (Cibed) [Believe].osu",
+  "mode": "osu",
+  "score": {
+    "accuracy": 0.9901,
+    "max_combo": 1790,
+    "statistics": {
+      "great": 1327,
+      "ok": 20,
+      "meh": 0,
+      "miss": 16,
+      "slider_tail_hit": 406
+    },
+    "mods": [{"acronym": "HD"}, {"acronym": "DT", "settings": {"speed_change": 1.01}}]
+  }
+}
+
+###
+
+POST {{OsuApi_HostAddress}}/calculate
+Content-Type: application/json
+
+{
+  "file": "/home/spring/Documents/Fujikawa Chiai - 1000-nen Ai (Cibed) [Believe].osu",
+  "mode": "osu",
+  "score": {
+    "mods": [{"acronym": "DT"}]
+  }
+}
+
+###
+
+POST {{OsuApi_HostAddress}}/calculate
+Content-Type: application/json
+
+{
+  "file": "/home/spring/Documents/Fujikawa Chiai - 1000-nen Ai (Cibed) [Believe].osu",
+  "mode": "osu",
+  "score": {
+    "mods": [
+      {
+        "acronym": "DT",
+        "settings": {
+          "speed_change": 1.1
+        }
+      }
+    ]
+  }
+}
+
+###
