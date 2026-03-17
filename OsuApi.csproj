@@ -4,15 +4,34 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        
+        <!-- Size optimization -->
+        <PublishSingleFile>true</PublishSingleFile>
+        <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+        <SatelliteResourceLanguages>zh-cn</SatelliteResourceLanguages>
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.0" />
-        <PackageReference Include="ppy.osu.Game" Version="2026.315.0" />
-        <PackageReference Include="ppy.osu.Game.Rulesets.Catch" Version="2026.315.0" />
-        <PackageReference Include="ppy.osu.Game.Rulesets.Mania" Version="2026.315.0" />
-        <PackageReference Include="ppy.osu.Game.Rulesets.Osu" Version="2026.315.0" />
-        <PackageReference Include="ppy.osu.Game.Rulesets.Taiko" Version="2026.315.0" />
+        <TrimmableAssembly Include="osu.Game.Resources" />
+        <TrimmableAssembly Include="osu.Game" />
+        <TrimmableAssembly Include="osu.Framework" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.14" />
+        <PackageReference Include="ppy.osu.Game" Version="2026.317.0" />
+        <PackageReference Include="ppy.osu.Game.Resources" Version="2026.312.0" ExcludeAssets="runtime" />
+        <PackageReference Include="ppy.osu.Game.Rulesets.Catch" Version="2026.317.0" />
+        <PackageReference Include="ppy.osu.Game.Rulesets.Mania" Version="2026.317.0" />
+        <PackageReference Include="ppy.osu.Game.Rulesets.Osu" Version="2026.317.0" />
+        <PackageReference Include="ppy.osu.Game.Rulesets.Taiko" Version="2026.317.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="**/*.png" />
+        <EmbeddedResource Remove="**/*.jpg" />
+        <EmbeddedResource Remove="**/*.mp3" />
+    </ItemGroup>
 </Project>
