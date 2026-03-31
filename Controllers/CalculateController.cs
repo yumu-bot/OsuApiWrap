@@ -31,10 +31,9 @@ public class CalculateController : ControllerBase
             using var stream = System.IO.File.OpenRead(request.File);
             var map = _calculator.GetBeatmap(stream);
             var ruleset = OsuCalculator.GetRuleset(request.Mode);
-            var (attr, beatmap) = _calculator.CalculateDifficulty(map, ruleset);
+            var (_, beatmap) = _calculator.CalculateDifficulty(map, ruleset);
 
             var scoreInfo = new ScoreInfo(beatmap: beatmap.BeatmapInfo, ruleset: ruleset.RulesetInfo);
-
             if (request.Score != null)
             {
                 scoreInfo.Accuracy = request.Score.Accuracy;

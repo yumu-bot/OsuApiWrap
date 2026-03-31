@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using Newtonsoft.Json;
 using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -69,14 +70,23 @@ public class UnitTest : IClassFixture<WebApplicationFactory<Program>>
         {
             score["mods"] = _mods[i];
             json["score"] = score;
+            var sw = Stopwatch.StartNew();
             var result = await Reqeust("calculate", json);
-            var star = (double)result["difficulty"]["star_rating"];
+            sw.Stop();
+            _output.WriteLine($"call time {i} ==> {sw.ElapsedMilliseconds}ms");
+            var diff = result["difficulty"];
+            if (null == diff)
+            {
+                Assert.Fail($"request error: {diff}");
+                return;
+            }
+            var star = (double)(diff["star_rating"] ?? 0);
             var isOk = check(star, _testResult[file][i]);
-            _output.WriteLine($"t{i} ==> {isOk}");
             if (!isOk)
             {
                 _output.WriteLine($" #{star} != {_testResult[file][i]}");
             }
+            Assert.True(isOk);
         }
     }
 

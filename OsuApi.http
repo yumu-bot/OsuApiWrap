@@ -13,7 +13,7 @@ Content-Type: application/json
       "great": 1327,
       "ok": 20,
       "meh": 0,
-      "miss": 16,
+      "miss": 0,
       "slider_tail_hit": 406
     },
     "mods": [{"acronym": "HD"}, {"acronym": "DT", "settings": {"speed_change": 1.01}}]

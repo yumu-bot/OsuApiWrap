@@ -8,7 +8,7 @@ public static class HitResultParser
 {
     public static bool TryParseHitResult(string value, out HitResult result)
     {
-        if (Enum.TryParse<HitResult>(value, true, out result))
+        if (Enum.TryParse(value, true, out result))
             return true;
 
         foreach (var field in typeof(HitResult).GetFields())
