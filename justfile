@@ -10,6 +10,7 @@ build-win:
     dotnet publish -c Release -r win-x64 -o ./output
     
 update:
+    dotnet tool install --global dotnet-outdated-tool
     dotnet outdated --version-lock major --upgrade
 
 run: update build
