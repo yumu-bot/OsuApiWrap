@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using osu.Framework.Extensions.ObjectExtensions;
 using osu.Game.Online.API;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.Catch;
@@ -59,7 +58,7 @@ public record ScoreRequest(
     }
     public void ApplyMods(ScoreInfo scoreInfo, Ruleset ruleset)
     {
-        if (Mods.IsNull() || Mods.Count == 0) return;
+        if (Mods == null || Mods.Count == 0) return;
         var selectedMods = new Mod[Mods.Count];
         var isNoClassic = true;
 

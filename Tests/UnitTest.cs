@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using Newtonsoft.Json;
 using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json.Linq;
-using osu.Framework.Extensions.ObjectExtensions;
 using Xunit.Abstractions;
 
 namespace OsuApi.Tests;
