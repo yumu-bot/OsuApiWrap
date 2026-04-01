@@ -7,3 +7,5 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 *.DotSettings.user
+
+update.sh
