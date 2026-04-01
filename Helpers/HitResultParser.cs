@@ -6,21 +6,27 @@ namespace OsuApi.Helpers;
 
 public static class HitResultParser
 {
+    private static readonly Dictionary<string, HitResult> HitResultMap = Build();
+    private static Dictionary<string, HitResult> Build()
+    {
+        var type = typeof(HitResult);
+
+        return type
+            .GetFields(BindingFlags.Public | BindingFlags.Static)
+            .Select(f => new
+            {
+                Field = f,
+                Attr = f.GetCustomAttribute<EnumMemberAttribute>()
+            })
+            .Where(x => x.Attr?.Value != null)
+            .ToDictionary(
+                x => x.Attr!.Value!,
+                x => (HitResult)x.Field.GetValue(null)!
+            );
+    }
+    
     public static bool TryParseHitResult(string value, out HitResult result)
     {
-        if (Enum.TryParse(value, true, out result))
-            return true;
-
-        foreach (var field in typeof(HitResult).GetFields())
-        {
-            var attr = field.GetCustomAttribute<EnumMemberAttribute>();
-            if (attr?.Value != null && attr.Value.Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                result = (HitResult)field.GetValue(null)!;
-                return true;
-            }
-        }
-
-        return false;
+        return HitResultMap.TryGetValue( value, out  result);
     }
 }

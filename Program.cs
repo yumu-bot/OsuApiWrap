@@ -23,6 +23,4 @@ if (args.Length == 0 || args[0] != "test")
     app.Run();
 }
 
-public partial class Program
-{
-}
+public partial class Program;

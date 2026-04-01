@@ -1,10 +1,8 @@
 using osu.Game.Beatmaps;
-namespace OsuApi;
+namespace OsuApi.Models;
 
-public class CalculateWorkingBeatmap : WorkingBeatmap
+public class CalculateWorkingBeatmap(IBeatmap beatmap) : WorkingBeatmap(beatmap.BeatmapInfo, null)
 {
-    private readonly IBeatmap beatmap;
-    public CalculateWorkingBeatmap(IBeatmap beatmap) : base(beatmap.BeatmapInfo, null) => this.beatmap = beatmap;
     protected override IBeatmap GetBeatmap() => beatmap;
     public override osu.Framework.Graphics.Textures.Texture GetBackground() => null!;
     protected override osu.Framework.Audio.Track.Track GetBeatmapTrack() => null!;

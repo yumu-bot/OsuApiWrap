@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using OsuApi.Models;
-using OsuApi.Helpers;
 
 namespace OsuApi.Controllers;
 
@@ -11,13 +8,7 @@ namespace OsuApi.Controllers;
 [Route("calculate")]
 public class CalculateController : ControllerBase
 {
-    private readonly OsuCalculator _calculator;
-
-    public CalculateController(OsuCalculator calculator)
-    {
-        _calculator = calculator;
-    }
-
+    private readonly OsuCalculator _calculator = new ();
     [HttpPost]
     public IActionResult Calculate([FromBody] CalculateRequest request)
     {
@@ -34,58 +25,23 @@ public class CalculateController : ControllerBase
             var (_, beatmap) = _calculator.CalculateDifficulty(map, ruleset);
 
             var scoreInfo = new ScoreInfo(beatmap: beatmap.BeatmapInfo, ruleset: ruleset.RulesetInfo);
-            if (request.Score != null)
-            {
-                scoreInfo.Accuracy = request.Score.Accuracy;
-                scoreInfo.MaxCombo = request.Score.MaxCombo;
-                scoreInfo.Statistics = new Dictionary<HitResult, int>();
+            
+            request.Apply(scoreInfo, ruleset);
+            
+            var (detailedAttr, _) = _calculator.CalculateDifficulty(map, ruleset, scoreInfo.Mods);
 
-                if (request.Score.Statistics != null)
-                {
-                    foreach (var (key, value) in request.Score.Statistics)
-                    {
-                        if (HitResultParser.TryParseHitResult(key, out var result))
-                        {
-                            scoreInfo.Statistics[result] = value;
-                        }
-                    }
-                }
-
-                if (request.Score.Mods != null)
-                {
-                    var selectedMods = new List<Mod>();
-
-                    foreach (var modReq in request.Score.Mods)
-                    {
-                        var newMod = modReq.ToMod(ruleset);
-                        selectedMods.Add(newMod);
-                    }
-                    
-                    scoreInfo.Mods = selectedMods.ToArray();
-                }
-            }
-
-            var (detailedAttr, detailedBeatmap) = _calculator.CalculateDifficulty(map, ruleset, scoreInfo.Mods);
-
-            var response = new {
+            if (request.Score == null) return Ok(new {
                 difficulty = detailedAttr,
                 performance = (object?)null
-            };
-
-            if (request.Score != null)
+            });
+            
+            var perfAttributes = _calculator.Calculate(detailedAttr, scoreInfo, ruleset);
+           
+            return Ok(new
             {
-                var perfAttributes = ruleset.CreatePerformanceCalculator()?.Calculate(scoreInfo, detailedAttr);
-                if (perfAttributes != null)
-                {
-                    return Ok(new
-                    {
-                        difficulty = detailedAttr,
-                        performance = perfAttributes
-                    });
-                }
-            }
-
-            return Ok(response);
+                difficulty = detailedAttr,
+                performance = perfAttributes
+            });
         }
         catch (Exception ex)
         {
