@@ -7,16 +7,16 @@ Content-Type: application/json
   "file": "/home/spring/Documents/Fujikawa Chiai - 1000-nen Ai (Cibed) [Believe].osu",
   "mode": "osu",
   "score": {
-    "accuracy": 0.9901,
-    "max_combo": 1790,
+    "accuracy": 0.9985,
+    "legacy_total_score": 74063430,
+    "max_combo": 1794,
     "statistics": {
-      "great": 1327,
-      "ok": 20,
+      "great": 1344,
+      "ok": 3,
       "meh": 0,
-      "miss": 0,
-      "slider_tail_hit": 406
+      "miss": 0
     },
-    "mods": [{"acronym": "HD"}, {"acronym": "DT", "settings": {"speed_change": 1.01}}]
+    "mods": [{"acronym": "CL"}]
   }
 }
 

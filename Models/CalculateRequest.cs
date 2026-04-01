@@ -58,13 +58,14 @@ public record ScoreRequest(
     }
     public void ApplyMods(ScoreInfo scoreInfo, Ruleset ruleset)
     {
-        if (Mods == null || Mods.Count == 0) return;
-        var selectedMods = new Mod[Mods.Count];
+        var mods = Mods ?? [];
+        
+        var selectedMods = new Mod[mods.Count];
         var isNoClassic = true;
 
-        for (var i = 0; i < Mods.Count; i++)
+        for (var i = 0; i < mods.Count; i++)
         {
-            var mod = Mods[i].ToMod(ruleset);
+            var mod = mods[i].ToMod(ruleset);
             selectedMods[i] = mod;
 
             if (mod is ModClassic)
